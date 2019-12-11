@@ -1,0 +1,2 @@
+python neuro.py
+pause
