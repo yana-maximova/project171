@@ -4,9 +4,9 @@
 			v-for="(item, key) in items"
 			class="item"
 			:class="{
-				'error': item.type === 'error',
-				'message': item.type === 'message',
-				'warning': item.type === 'warning'
+				error: item.type === 'error',
+				message: item.type === 'message',
+				warning: item.type === 'warning'
 			}"
 			:key="key"
 		>
@@ -16,51 +16,58 @@
 </template>
 
 <script>
-import eventBus from '@/utils/EventBus'
+import eventBus from "@/utils/EventBus";
+
 export default {
-	name: 'Console',
-	data () {
+	name: "Console",
+	data() {
 		return {
 			items: []
-		}
+		};
 	},
 	methods: {
-		addItem (e) {
-			const { type, message } = e
+		addItem(e) {
+			const { type, message } = e;
 			if (e.replace) {
-				this.items.splice(this.items.length - 1, 1, { type, message })
+				this.items.splice(this.items.length - 1, 1, { type, message });
 			} else {
-				this.items.push({ type, message })
+				this.items.push({ type, message });
 			}
-			this.$refs.console.scrollTop = this.$refs.console.scrollHeight
+			this.$refs.console.scrollTop = this.$refs.console.scrollHeight;
+		},
+		clearConsole() {
+			this.items = [];
 		}
 	},
-	mounted () {
-		eventBus.$on('logFromPython', this.addItem)
+	mounted() {
+		eventBus.$on("logFromPython", this.addItem);
+		eventBus.$on("clearConsole", this.clearConsole);
 	},
-	beforeDestroy () {
-		eventBus.$off('logFromPython', this.addItem)
+	beforeDestroy() {
+		eventBus.$off("logFromPython", this.addItem);
+		eventBus.$off("clearConsole", this.clearConsole);
 	}
-}
+};
 </script>
 
 <style scoped lang="scss">
-	.console {
-		flex-grow: 1;
-		background-color: var(--text-color);
-		height: 0;
-		overflow-y: scroll;
-	}
-	.item {
-		min-height: 1em;
-	}
-	.error {
-		color: var(--error);
-	}
-	.message {
-		color: var(--message);
-	}
-	.warning {
-		color: var(--warning);
-	}
+.console {
+	background-color: var(--text-color);
+	height: 100%;
+	min-height: 150px;
+	overflow-y: scroll;
+	margin-bottom: 1em;
+}
+.item {
+	min-height: 1em;
+}
+.error {
+	color: var(--error);
+}
+.message {
+	color: var(--message);
+}
+.warning {
+	color: var(--warning);
+}
 </style>

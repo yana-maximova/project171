@@ -3,6 +3,7 @@ gui_project/node_modules
 Work
 blob_storage
 webrtc_event_logs
+__pycache__
 net/__pycache__
 gui/__pycache__
 

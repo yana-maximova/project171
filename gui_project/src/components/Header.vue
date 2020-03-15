@@ -1,56 +1,58 @@
 <template>
-  <header class="header">
-    <div class="logo">
-      <router-link to="/">
-        <img src="assets/logo.png" alt="логотип">
-      </router-link>
-    </div>
-    <nav class="menu">
-      <ul class="menu__list">
-        <li class="menu__link"><router-link to="/tester">Тестирование</router-link></li>
-        <li class="menu__link"><router-link to="/annotation">Аннотации</router-link></li>
-        <li class="menu__link"><router-link to="/training">Обучение сети</router-link></li>
-      </ul>
-    </nav>
-  </header>
+	<div
+		class="header_content d-flex justify-content-between align-items-center py-2 px-4"
+	>
+		<div class="logo">
+			<router-link to="/">
+				<img
+					src="../assets/logo.png"
+					width="30px"
+					height="30px"
+					alt="логотип"
+				/>
+			</router-link>
+		</div>
+		<nav class="menu">
+			<ul
+				class="menu__list d-flex justify-content-around align-items-center mb-1"
+			>
+				<li class="menu__link mr-3">
+					<router-link to="/tester">Тестирование</router-link>
+				</li>
+				<li class="menu__link mr-3">
+					<router-link to="/annotation">Аннотации</router-link>
+				</li>
+				<li class="menu__link mr-3">
+					<router-link to="/training">Обучение сети</router-link>
+				</li>
+			</ul>
+		</nav>
+	</div>
 </template>
 
 <script>
 export default {
-	name: 'Header'
-}
+	name: "Header"
+};
 </script>
 
 <style lang="scss">
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1em 2em;
-  border-bottom: 2px solid var(--primary);
+.header_content {
+	border-bottom: 2px solid var(--secondary);
 }
 
 .menu__list {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+	a {
+		font-weight: bold;
+		color: var(--text-color);
+		text-decoration: none;
+		transition: color 0.3s;
 
-  li {
-    margin-right: 1em;
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  a {
-    font-weight: bold;
-    color: var(--text-color);
-    text-decoration: none;
-    transition: color .3s;
-
-    &.router-link-exact-active, &:hover {
-       color: var(--primary);
-     }
-  }
+		&.router-link-exact-active,
+		&:hover {
+			color: var(--secondary);
+			text-decoration: none;
+		}
+	}
 }
 </style>

@@ -1,14 +1,16 @@
 import sys
 import socket
+from optparse import OptionParser
 from gui.browser import prepare_browser, host, port, cef
 from gui.server import prepare_server
 import net.annotations as annotations
 from net.net import trainingNet
 
 handlers = {
-    "getAnnotationsBlock": annotations.getAnnotationsBlock,
-    "saveAnnotationsBlock": annotations.saveAnnotationsBlock,
+    "getBlocks": annotations.getBlocks,
+    "saveBlocks": annotations.saveBlocks,
     "trainingNet": trainingNet,
+    "createLettersFromBlocks": annotations.createLettersFromBlocks
 }
 
 def handler(fn, data):
@@ -20,9 +22,12 @@ def handler(fn, data):
     return answer
 
 if __name__ == '__main__':
-    noArgs = True
-    if len(sys.argv) > 1:
-        noArgs = False
+    parser = OptionParser()
+    parser.add_option("-s", "--server", dest="isServer", action="store_true", help="Start programm in server mode.", default=False)
+    (options, args) = parser.parse_args()
+    isServer = options.isServer
+    if isServer:
+        port = "80"
 
     def pyHandler():
         pass
@@ -30,18 +35,12 @@ if __name__ == '__main__':
     server = prepare_server(host, port, handler)
     server.start()
 
-    if noArgs:
+    if not isServer:
         browser = prepare_browser(pyHandler)
-
- #  wsServer = prepareWsServer(wsPort, wsHost)
-   # wsServer.start()
-	
-    if noArgs:
+    #if not isServer:
         cef.MessageLoop()
         server.terminate()
-#        wsServer.terminate()
         server.join()
- #       wsServer.join()
         del browser
         cef.Shutdown()
 
